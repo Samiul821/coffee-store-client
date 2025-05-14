@@ -1,8 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import Swal from "sweetalert2";
+// import { motion } from "framer-motion";
 
 const AddCoffee = () => {
+  const handleAddCoffe = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const newCoffee = Object.fromEntries(formData.entries());
+    console.log(newCoffee);
+
+    // send coffee data to the db
+    fetch("http://localhost:3000/coffees", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newCoffee),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Coffee added successfully!",
+            icon: "success",
+            draggable: true,
+          });
+        }
+      });
+  };
   return (
     <div>
       <Link
@@ -23,7 +51,7 @@ const AddCoffee = () => {
             distribution of letters, as opposed to using "Content here".
           </p>
         </div>
-        <form className="font-secondary">
+        <form onSubmit={handleAddCoffe} className="font-secondary">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <fieldset className="w-full ">
               <label className="label md:text-xl font-semibold text-[#1b1a1a80] mb-3">
@@ -38,13 +66,13 @@ const AddCoffee = () => {
             </fieldset>
             <fieldset className=" w-full ">
               <label className="label md:text-xl font-semibold text-[#1b1a1a80] mb-3">
-                Chef
+                Quantity
               </label>
               <input
                 type="text"
-                name="chef"
+                name="quantity"
                 className="input bg-white w-full text-[#1b1a1a70]"
-                placeholder="Enter coffee chef"
+                placeholder="Enter coffee quantity"
               />
             </fieldset>
             <fieldset className=" w-full ">
@@ -104,7 +132,11 @@ const AddCoffee = () => {
             />
           </fieldset>
 
-          <input className="w-full bg-[#D2B48C] text-[#331A15] font-primary text-2xl flex items-center py-2 border-[#331A15] border-2 rounded btn h-auto" type="submit" value="Add Coffee" />
+          <input
+            className="w-full bg-[#D2B48C] text-[#331A15] font-primary text-2xl flex items-center py-2 border-[#331A15] border-2 rounded btn h-auto"
+            type="submit"
+            value="Add Coffee"
+          />
         </form>
       </div>
     </div>
