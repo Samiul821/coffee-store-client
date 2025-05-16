@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
 const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
-  const { _id, name, quantity, price, photo } = coffee;
+  const { _id, name, chef, price, photo } = coffee;
 
   const handleDelete = (_id) => {
     console.log(_id);
@@ -65,7 +65,7 @@ const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
           <span className="font-semibold">Name:</span> {name}
         </p>
         <p className="text-[#555] text-base md:text-lg">
-          <span className="font-semibold">Quantity:</span> {quantity}
+          <span className="font-semibold">Chef:</span> {chef}
         </p>
         <p className="text-[#444] text-base md:text-lg">
           <span className="font-semibold">Price:</span> {price} Tk

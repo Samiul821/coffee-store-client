@@ -4,7 +4,7 @@ import { Link, useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const UpdateCoffee = () => {
-  const { _id, name, quantity, price, supplire, taste, details, photo } =
+  const { _id, name, chef, price, category, supplire, taste, details, photo } =
     useLoaderData();
 
   const handleUpdateCoffee = (e) => {
@@ -73,14 +73,14 @@ const UpdateCoffee = () => {
             </fieldset>
             <fieldset className=" w-full ">
               <label className="label md:text-xl font-semibold text-[#1b1a1a80] mb-3">
-                Quantity
+                Chef
               </label>
               <input
                 type="text"
-                name="quantity"
-                defaultValue={quantity}
+                name="chef"
+                defaultValue={chef}
                 className="input bg-white w-full text-[#1b1a1a70]"
-                placeholder="Enter coffee quantity"
+                placeholder="Enter coffee chef"
               />
             </fieldset>
             <fieldset className=" w-full ">
@@ -109,14 +109,14 @@ const UpdateCoffee = () => {
             </fieldset>
             <fieldset className=" w-full ">
               <label className="label md:text-xl font-semibold text-[#1b1a1a80] mb-3">
-                Price
+                Category
               </label>
               <input
                 type="text"
-                name="price"
-                defaultValue={price}
+                name="category"
+                defaultValue={category}
                 className="input bg-white w-full text-[#1b1a1a70]"
-                placeholder="Enter coffee price"
+                placeholder="Enter coffee category"
               />
             </fieldset>
             <fieldset className=" w-full ">
@@ -131,19 +131,31 @@ const UpdateCoffee = () => {
                 placeholder="Enter coffee details"
               />
             </fieldset>
+            <fieldset className=" w-full mb-6">
+              <label className="label md:text-xl font-semibold text-[#1b1a1a80] mb-3">
+                Price
+              </label>
+              <input
+                type="text"
+                name="price"
+                defaultValue={price}
+                className="input bg-white w-full text-[#1b1a1a70]"
+                placeholder="Enter coffee price"
+              />
+            </fieldset>
+            <fieldset className=" w-full mb-6">
+              <label className="label md:text-xl font-semibold text-[#1b1a1a80] mb-3">
+                Photo
+              </label>
+              <input
+                type="text"
+                name="photo"
+                defaultValue={photo}
+                className="input bg-white w-full text-[#1b1a1a70]"
+                placeholder="Enter photo URL"
+              />
+            </fieldset>
           </div>
-          <fieldset className=" w-full my-6">
-            <label className="label md:text-xl font-semibold text-[#1b1a1a80] mb-3">
-              Photo
-            </label>
-            <input
-              type="text"
-              name="photo"
-              defaultValue={photo}
-              className="input bg-white w-full text-[#1b1a1a70]"
-              placeholder="Enter photo URL"
-            />
-          </fieldset>
 
           <input
             className="w-full bg-[#D2B48C] text-[#331A15] font-primary text-2xl flex items-center py-2 border-[#331A15] border-2 rounded btn h-auto"
