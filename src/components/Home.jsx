@@ -1,11 +1,19 @@
-import React from 'react';
+import React from "react";
+import { useLoaderData } from "react-router-dom";
+import CoffeeCard from "./CoffeeCard";
 
 const Home = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+  const coffees = useLoaderData();
+
+  return (
+    <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-[50px]">
+        {coffees.map((coffee) => (
+          <CoffeeCard key={coffee._id} coffee={coffee}></CoffeeCard>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Home;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import Swal from "sweetalert2";
@@ -28,6 +28,8 @@ const AddCoffee = () => {
             icon: "success",
             draggable: true,
           });
+
+          // form.reset()
         }
       });
   };
@@ -99,13 +101,13 @@ const AddCoffee = () => {
             </fieldset>
             <fieldset className=" w-full ">
               <label className="label md:text-xl font-semibold text-[#1b1a1a80] mb-3">
-                Category
+                Price
               </label>
               <input
                 type="text"
-                name="category"
+                name="price"
                 className="input bg-white w-full text-[#1b1a1a70]"
-                placeholder="Enter coffee category"
+                placeholder="Enter coffee price"
               />
             </fieldset>
             <fieldset className=" w-full ">
