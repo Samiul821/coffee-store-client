@@ -1,6 +1,9 @@
-import React from "react";
+import React, { use, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import Swal from "sweetalert2";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -21,6 +24,51 @@ const childVariants = {
 };
 
 const SignUp = () => {
+  const { createUser } = use(AuthContext);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+
+    const { email, password, ...userProfile } = Object.fromEntries(
+      formData.entries()
+    );
+
+    console.log(email, password, userProfile);
+
+    // create user in the firebase
+    createUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+
+        // save profile info in the db
+        fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userProfile),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.insertedId) {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Your account is created.",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-gray-50">
       <motion.div
@@ -76,6 +124,7 @@ const SignUp = () => {
         </motion.div>
 
         <motion.form
+          onSubmit={handleSignUp}
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -103,6 +152,16 @@ const SignUp = () => {
             </div>
 
             <div className="space-y-2">
+              <label className="block text-sm">Phone Number</label>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="e.g. 01712345678"
+                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:border-violet-600"
+              />
+            </div>
+
+            <div className="space-y-2">
               <label className="block text-sm">Email address</label>
               <input
                 type="email"
@@ -112,14 +171,20 @@ const SignUp = () => {
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 relative">
               <label className="block text-sm">Password</label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="••••••••"
-                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:border-violet-600"
+                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:border-violet-600 pr-10"
               />
+              <span
+                className="absolute right-3 top-[38px] cursor-pointer text-gray-600"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FiEyeOff /> : <FiEye />}
+              </span>
             </div>
           </motion.div>
 
