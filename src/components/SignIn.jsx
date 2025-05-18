@@ -21,6 +21,12 @@ const childVariants = {
 };
 
 const SignIn = () => {
+
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <motion.div
@@ -76,6 +82,7 @@ const SignIn = () => {
         </motion.div>
 
         <motion.form
+          onSubmit={handleSignIn}
           variants={containerVariants}
           initial="hidden"
           animate="visible"
